@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,14 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace mousse
+namespace mousse.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для LineSettings.xaml
+    /// Логика взаимодействия для LineSettingsWindow.xaml
     /// </summary>
-    public partial class LineSettings : Window
+    public partial class LineSettingsWindow : Window
     {
-        private int WidthLine { 
+        private int WidthLine
+        {
             get;
             set;
         }
@@ -37,16 +37,14 @@ namespace mousse
         {
             return Orient;
         }
-        public LineSettings()
+        public LineSettingsWindow()
         {
             InitializeComponent();
         }
-
         private void NewLine_Click(object sender, RoutedEventArgs e)
         {
             WidthLine = Convert.ToInt32(Width_TB.Text);
             Orient = (bool)Yes_RB.IsChecked;
-            Debug.WriteLine(Orient);
             this.Close();
         }
     }

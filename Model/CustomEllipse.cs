@@ -14,6 +14,7 @@ namespace mousse.ViewModel
         public double XPos { get; set; }
         public double YPos { get; set; }
         public int NodeNumber { get; set; }
+        public List<int> SmezhLines { get; set; } = new List<int>(); // тут хранятся все линии, даже для неориентированных графов
         public Dictionary<int, int> SmezhNodes { get; set; } = new Dictionary<int, int>();
     }
 }

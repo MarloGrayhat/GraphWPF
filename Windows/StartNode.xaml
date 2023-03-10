@@ -1,0 +1,16 @@
+﻿<Window x:Class="mousse.Windows.StartNode"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mousse.Windows"
+        mc:Ignorable="d"
+        Title="StartNode" Height="200" Width="280" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" >
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Content="Начинать с вершины"/>
+            <TextBox x:Name="StartNode_TB" Margin="0,10,0,10" PreviewTextInput="StartNode_TB_PreviewTextInput"/>
+            <Button x:Name="StartNode_BTN" Content="Запустить алгоритм" Click="StartNode_BTN_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

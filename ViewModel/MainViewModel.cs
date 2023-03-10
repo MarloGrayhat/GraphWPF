@@ -20,5 +20,20 @@ namespace mousse.ViewModel
             Nodes = new ObservableCollection<CustomEllipse>();
             Lines = new ObservableCollection<CustomArrow>();
         }
+
+        public static int[,] GetMatrix()
+        {
+            var nodes = Nodes;
+            int[,] graph = new int[nodes.Count, nodes.Count];
+            foreach (var node in nodes)
+            {
+                for(int i = 0; i < nodes.Count; i++ )
+                {
+                    if (node.SmezhNodes.ContainsKey(i)) graph[node.NodeNumber - 1, i] = node.SmezhNodes[i];
+                    else graph[node.NodeNumber - 1, i] = int.MaxValue;
+                }
+            }
+            return graph;
+        }
     }
 }

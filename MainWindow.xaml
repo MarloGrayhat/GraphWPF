@@ -7,15 +7,15 @@
         xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" 
         xmlns:viewmodel="clr-namespace:mousse.ViewModel"
         mc:Ignorable="d"
-        Title="Design by Marlo Grayhat aka Марат Кундрау" Height="450" Width="1000" Background="AliceBlue">
+        Title="Design by Марат Кундрау aka Marlo Grayhat. Support by Алексей Бесхлебный aka SolSteler" Height="450" Width="1000" Background="AliceBlue" WindowStartupLocation="CenterScreen" >
     <Window.DataContext>
         <viewmodel:MainViewModel/>
     </Window.DataContext>
-    <Grid x:Name="MainGrid" >
+    <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" x:Name="MainGrid_LeftBorder"/>
+            <ColumnDefinition Width="25" x:Name="MainGrid_LeftBorder"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="150" x:Name="MainGrid_RightBorder"/>
+            <ColumnDefinition Width="25" x:Name="MainGrid_RightBorder"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -23,38 +23,6 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="Description_TBlock"
-            Grid.Row="1"
-            Grid.Column="0" Background="#FFFF7373"
-            TextWrapping="Wrap" />
-        <StackPanel
-                VerticalAlignment="Center"
-                Grid.Column="2"
-                Grid.Row="1">
-            <Button x:Name="PrintMatrix"
-                Click="GetMatrix_Click"
-                Width="120"
-                Height="50"
-                Content="Получить матрицу"
-                Margin="0,0,0,10"
-                />
-            <Button Click="DefaultZoom"
-                Width="120"
-                Height="50"
-                Margin="0,0,0,10"
-                    
-                >
-                
-                <TextBlock Text="Убрать увеличение/уменьшение"
-                           TextWrapping="Wrap"/>
-            </Button>
-            <Button x:Name="DFS_Button" Click="DFS_Click"
-                Width="120"
-                Height="50"
-                Margin="0,0,0,10" Content="DFS"/>
-        </StackPanel>
-        
-        
         <!--#region Визуализация графа-->
         <!--TextBlock нужен только для того, чтобы работал Grid-->
         <TextBlock Grid.Row="1" Grid.Column="1" MouseLeftButtonDown="NewNode"/>
@@ -65,11 +33,12 @@
             Grid.Column="1">
             
             <!--#region Показ вершин-->
-            <ItemsControl  ItemsSource="{Binding Nodes}">
+            <ItemsControl  ItemsSource="{Binding Nodes}" >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Canvas Background="LightBlue">
+                        <Canvas Background="LightBlue" >
                             <Border
+                                
                                 Canvas.Left="{Binding XPos}"
                                 Canvas.Top="{Binding YPos}"
                                 Width="{Binding Radius}"
@@ -78,13 +47,17 @@
                                 BorderThickness="1"
                                 CornerRadius="30"
                                 Tag="{Binding NodeNumber}"
-                                MouseRightButtonDown="NewLine" >
+                                MouseRightButtonDown="NewLine" 
+                                MouseMove="MoveNode"
+                                MouseLeftButtonDown="DrugNode"
+                                MouseLeftButtonUp="DropNode"
+                                >
                                 <TextBlock Text="{Binding NodeNumber}"
                                            FontSize="35"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Background="Transparent" 
-                                      />
+                                      />                    
                             </Border>
                         </Canvas>
                     </DataTemplate>

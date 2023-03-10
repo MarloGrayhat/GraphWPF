@@ -1,13 +1,13 @@
-﻿<Window x:Class="mousse.MatrixWindow"
+﻿<Window x:Class="mousse.Windows.MatrixWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:mousse"
+        xmlns:local="clr-namespace:mousse.Windows"
         mc:Ignorable="d"
-        Title="MatrixWindow" Height="450" Width="800">
+        Title="MatrixWindow" Height="100" Width="100">
     <Grid>
-            <DataGrid Name="dg" FontSize="30" IsReadOnly="True" 
+        <DataGrid Name="dg" FontSize="25" IsReadOnly="True" 
                       CanUserResizeColumns="False" 
                       CanUserResizeRows="False"
                       CanUserSortColumns="False"
@@ -15,7 +15,7 @@
                       CanUserDeleteRows="False"
                       CanUserReorderColumns="False"
                       >
-                
-            </DataGrid>
+
+        </DataGrid>
     </Grid>
 </Window>

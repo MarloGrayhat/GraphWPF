@@ -14,7 +14,13 @@ C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\m
 C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\mousse.exe
 C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\mousse.pdb
 C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\MatrixWindow.g.cs
-C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\MatrixWindow.baml
-C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\LineSettings.g.cs
-C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\LineSettings.baml
+C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\Windows\Description.g.cs
+C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\Windows\SettingsButtons.g.cs
+C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\Windows\Description.baml
+C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\Windows\SettingsButtons.baml
+C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\Windows\LineSettingsWindow.g.cs
+C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\Windows\MatrixWindow.g.cs
+C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\Windows\LineSettingsWindow.baml
+C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\Windows\MatrixWindow.baml
+C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\Windows\StartNode.g.cs
+C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\obj\Debug\Windows\StartNode.baml

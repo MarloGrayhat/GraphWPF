@@ -55,20 +55,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Algos\BFSMatrix.cs" />
+    <Compile Include="Algos\Deikstra.cs" />
     <Compile Include="Algos\DFSMatrix.cs" />
-    <Compile Include="LineSettings.xaml.cs">
-      <DependentUpon>LineSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MatrixWindow.xaml.cs">
-      <DependentUpon>MatrixWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Algos\Node.cs" />
+    <Compile Include="Algos\Paint.cs" />
     <Compile Include="Model\CustonArrow.cs" />
     <Compile Include="Model\CustomEllipse.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Page Include="LineSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="Windows\Description.xaml.cs">
+      <DependentUpon>Description.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\LineSettingsWindow.xaml.cs">
+      <DependentUpon>LineSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MatrixWindow.xaml.cs">
+      <DependentUpon>MatrixWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SettingsButtons.xaml.cs">
+      <DependentUpon>SettingsButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\StartNode.xaml.cs">
+      <DependentUpon>StartNode.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -81,7 +90,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MatrixWindow.xaml">
+    <Page Include="Windows\Description.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\LineSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MatrixWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SettingsButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\StartNode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

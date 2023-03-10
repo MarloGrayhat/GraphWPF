@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using mousse.Windows;
 
 namespace mousse
 {
@@ -23,24 +24,35 @@ namespace mousse
     public partial class MainWindow : Window
     {
         private double zoomMax = 5;
-        private double zoomMin = 1;
+        private double zoomMin = 0.5;
         private double zoomSpeed = 0.001;
         private double zoom = 1;
 
         public static int first; // запоминаем номер первой выбранной вершины
         private static bool selectNode = false; // выбирали ли мы уже до этого вершину
 
-        private static Queue<int> queuePrint;
-
-        DispatcherTimer gameTimer = new DispatcherTimer();
-
         public MainWindow()
         {
             InitializeComponent();
-            MainGrid.Focus();
-            gameTimer.Interval = TimeSpan.FromMilliseconds(20);
-            gameTimer.Start();
-            Description_TBlock.Text = "ЛКМ для создания вершины\nДля создания связи между вершинами последовательно нажмите ПКМ по каждой из них\nДля приближения испоьзуйте колесико мыши\nЕсли ребро ориентированное, то на его конце будет маленькая стрелка, будьте внимательны";
+            this.Show();
+
+            #region Вывод информации слева от основного окна
+            Description description = new Description();
+            description.Owner = this;
+            description.WindowStartupLocation = WindowStartupLocation.Manual;
+            description.Left = this.Left - description.Description_Window.Width;
+            description.Top = this.Top;
+            description.Show();
+            #endregion
+
+            #region Вывод кнопок справа от основного окна
+            SettingsButtons sb = new SettingsButtons(this);
+            sb.Owner = this;
+            sb.WindowStartupLocation = WindowStartupLocation.Manual;
+            sb.Left = this.Left + this.Width;
+            sb.Top = this.Top;
+            sb.Show();
+            #endregion
         }
 
         private void NewNode(Object sender, MouseEventArgs e)
@@ -67,23 +79,15 @@ namespace mousse
             // если уже была выбрана одна из вершин
             if (selectNode)
             {
-                //при нажании на ту же вершину
+                
                 if (first != tag)
                 {
-
                     selectNode = !selectNode; // если выбирается 1 то станет true, а когда выберем 2, то с первой уйдет выделение 
-                    
-                    // Возвращаем изначальный цвет. Это можно сделать только путем создания новой вершины
-                    nodes[first] = new ViewModel.CustomEllipse()
-                    {
-                        NodeNumber = first + 1,
-                        Fill = "Red",
-                        XPos = nodes[first].XPos,
-                        YPos = nodes[first].YPos,
-                        SmezhNodes = nodes[first].SmezhNodes    
-                    };
 
-                    LineSettings lineSettings = new LineSettings();
+                    // Возвращаем изначальный цвет. Это можно сделать только путем создания новой вершины
+                    SettingsButtons.PaintNode(first, "Red");
+
+                    LineSettingsWindow lineSettings = new LineSettingsWindow();
                     lineSettings.Owner = this;
                     lineSettings.ShowDialog();
 
@@ -94,7 +98,6 @@ namespace mousse
                         nodes[tag].SmezhNodes.Add(first, weight);
                     }
                     nodes[first].SmezhNodes.Add(tag, weight);
-
 
                     var lines = ViewModel.MainViewModel.Lines;
                     // создаем линию
@@ -107,6 +110,15 @@ namespace mousse
                         weight,
                         orient)
                         );
+
+                    nodes[tag].SmezhLines.Add(lines.Count - 1);
+                    nodes[first].SmezhLines.Add(lines.Count - 1);
+
+                }
+                else //при нажании на ту же вершину
+                {
+                    SettingsButtons.PaintNode(first, "Red");
+                    selectNode = !selectNode; // если выбирается 1 то станет true, а когда выберем 2, то с первой уйдет выделение 
                 }
             }
             // если еще ни одна вершина не выбрана
@@ -114,33 +126,8 @@ namespace mousse
                 selectNode = !selectNode; // если выбирается 1 то станет true, а когда выберем 2, то с первой уйдет выделение 
                 first = tag;
                 // перекрашиваем вершину в серый
-                PainNode(first, "Gray");
+                SettingsButtons.PaintNode(first, "Gray");
             }
-        }
-
-        private void GetMatrix_Click(object sender, RoutedEventArgs e)
-        {
-            var graph = GetMatrix();
-
-            MatrixWindow matrixWindow = new MatrixWindow(graph);
-            matrixWindow.Show();
-        }
-
-        public static int[,] GetMatrix()
-        {
-            var nodes = ViewModel.MainViewModel.Nodes;
-            int[,] graph = new int[nodes.Count, nodes.Count];
-
-            Debug.WriteLine(nodes.Count);
-
-            foreach (var node in nodes)
-            {
-                foreach (var n in node.SmezhNodes)
-                {
-                    graph[node.NodeNumber - 1, n.Key] = n.Value;
-                }
-            }
-            return graph;
         }
 
         private void CanvasZoom(object sender, MouseWheelEventArgs e)
@@ -160,53 +147,72 @@ namespace mousse
             }
         }
 
-        private void DefaultZoom(object sender, RoutedEventArgs e)
+        private void MoveNode(object sender, MouseEventArgs e)
         {
-            CanvasGrid.RenderTransform = new ScaleTransform(1, 1);
-        }
-
-        private void DFS_Click(object sender, RoutedEventArgs e)
-        {
-            if (ViewModel.MainViewModel.Nodes.Count!=0)
-            switch ((string)DFS_Button.Content){
-                case "DFS":
-                    queuePrint = Algos.DFSMatrix.StartDFS();
-                    PainNode(queuePrint.Dequeue(), "Yellow");
-                    DFS_Button.Content = "DFS следущий шаг";
-                    break;
-                case "DFS следущий шаг":
-                    PainNode(queuePrint.Dequeue(), "Yellow");
-                    if (queuePrint.Count == 0)
+            var border = sender as Border;
+            if (border.IsMouseCaptured )
+            {
+                var nodes = ViewModel.MainViewModel.Nodes;
+                var lines = ViewModel.MainViewModel.Lines;
+                var tag = Convert.ToInt32(border.Tag) - 1;
+                var mp = e.GetPosition(CanvasGrid);
+                Debug.WriteLine(mp.X + " " + mp.Y);
+                var nodeXPos = nodes[tag].XPos;
+                var nodeYPos = nodes[tag].YPos;
+                if (mp.X > 0 && mp.Y > 0 && mp.X < CanvasGrid.ActualWidth && mp.Y < CanvasGrid.ActualHeight)
+                {
+                    foreach (var line in nodes[tag].SmezhLines)
                     {
-                        DFS_Button.Content = "Очистить";
+                        // нужно сохранять ориентированность графа, только поэтому тут эта проверка, я уверен, что это можно сделать короче, но мне лень.
+                        bool orient = lines[line].StrokeEndLineCap == "Triangle";
+                        if (nodeXPos + 25 == lines[line].X1MainLine && nodeYPos + 25 == lines[line].Y1MainLine)
+                        {
+                            lines[line] = new ViewModel.CustomArrow(
+                            mp.X,
+                            lines[line].X2MainLine,
+                            mp.Y,
+                            lines[line].Y2MainLine,
+                            lines[line].WeightText,
+                            orient
+                            );
+                        }
+                        else
+                        {
+                            lines[line] = new ViewModel.CustomArrow(
+                            lines[line].X1MainLine,
+                            mp.X,
+                            lines[line].Y1MainLine,
+                            mp.Y,
+                            lines[line].WeightText,
+                            !orient
+                            );
+                        }
+
                     }
-                    break;
-                case "Очистить":
-                    Refresh();
-                    DFS_Button.Content = "DFS";
-                    break;
+                    nodes[tag] = new ViewModel.CustomEllipse
+                    {
+                        NodeNumber = tag + 1,
+                        Fill = "Pink",
+                        XPos = mp.X - 25,
+                        YPos = mp.Y - 25,
+                        SmezhNodes = nodes[tag].SmezhNodes,
+                        SmezhLines = nodes[tag].SmezhLines
+                    };
+                }
             }
         }
 
-        private void Refresh()
+        protected void DrugNode(object sender, MouseButtonEventArgs e)
         {
-            for(int i = 0; i < ViewModel.MainViewModel.Nodes.Count; i++)
-            {
-                PainNode(i, "Red");
-            } 
+            Mouse.Capture(sender as Border);
         }
 
-        private static void PainNode(int node, string collor)
+        protected void DropNode(object sender, MouseButtonEventArgs e)
         {
-            var wiewNodes = ViewModel.MainViewModel.Nodes;
-            wiewNodes[node] = new ViewModel.CustomEllipse
-            {
-                NodeNumber = node + 1,
-                Fill = collor,
-                XPos = wiewNodes[node].XPos,
-                YPos = wiewNodes[node].YPos,
-                SmezhNodes = wiewNodes[node].SmezhNodes
-            };
+            Mouse.Capture(null);
+            var border = sender as Border;
+            var tag = Convert.ToInt32(border.Tag) - 1;
+            SettingsButtons.PaintNode(tag, "Red");
         }
     }
 }

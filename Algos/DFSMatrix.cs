@@ -8,58 +8,54 @@ using System.Threading.Tasks;
 
 namespace mousse.Algos
 {
-    class Node
-    {
-        public bool visible = false; // for dfs
-        public int v = 0; // 0 - не посещен, 1 - посмотрели и добавили, но не посетили 2 - посетили
-    }
-
     class DFSMatrix
     {
-        public static int nowN = 0;
         private static int nNodes;
-        private static Stack<int> way = new Stack<int>();  //путь до найденой вершины
         private static Node[] nodes; // тут хранятся каждыая вершина по отдельности 
         private static int[,] graph;
-        private static Queue<int> queue = new Queue<int>();
-        public static Queue<int> StartDFS()
+        private static Queue<int> queue;
+        public static Queue<int> StartDFS(int firstNode)
         {
-            graph = MainWindow.GetMatrix();
+            queue = new Queue<int>();
+            graph = ViewModel.MainViewModel.GetMatrix();
             nNodes = graph.GetLength(0);
             nodes = new Node[nNodes];
             for (int i = 0; i < nNodes; i++)
             {
                 nodes[i] = new Node();
             }
-            DFS(nowN, nNodes - 1);
+            DFS(firstNode);
             return queue;
         }
        
 
-        private static bool DFS(int node, int find) // обход графа в глубину
+        private static void /*bool*/ DFS(int node) // обход графа в глубину
         {
             queue.Enqueue(node);
-            if (node == find)
-            {
-                return true;
-            }
+            // нужно, если добавлять заодно и поиск вершины, но я пока уберу
+            //if (node == find)
+            //{
+            //    return true;
+            //}
             nodes[node].visible = true;
             for (int i = 0; i < nNodes; i++)
             {
-                if (graph[node, i] != 0) // исправить потом
+                if (graph[node, i] != int.MaxValue) // исправить потом
                 {
                     if (!nodes[i].visible)
                     {
-                        if (DFS(i, find)==true)
-                        {
-                            way.Push(i);
-                            return true;
-                        }
+                        DFS(i); // убрать строку, если будешь раскоментировать остальные
+                        // нужно, если добавлять заодно и поиск вершины, но я пока уберу
+                        //if (DFS(i, find)==true)
+                        //{
+                        //    way.Push(i);
+                        //    return true;
+                        //}
                     }
                 }
             }
-
-            return false;
+            // нужно, если добавлять заодно и поиск вершины, но я пока уберу
+            //return false;
         }
     }
 }

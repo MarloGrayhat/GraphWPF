@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Marlo\Desktop\Public\Учеба\Практика\экзамен ПМ2\mousse\App.xaml
-31276802120
+6769127219
 
-12-33167698
+19486903438
 13-1505183044
-LineSettings.xaml;MainWindow.xaml;MatrixWindow.xaml;
+MainWindow.xaml;Windows\Description.xaml;Windows\LineSettingsWindow.xaml;Windows\MatrixWindow.xaml;Windows\SettingsButtons.xaml;Windows\StartNode.xaml;
 
-True
+False
 
