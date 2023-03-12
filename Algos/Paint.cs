@@ -27,6 +27,16 @@ namespace mousse.Algos
             {
                 nodes[i] = new Node();
             }
+            for(int i = 0; i < nNodes; i++)
+            {
+                for (int j = 0; j < nNodes; j++)
+                {
+                    if(graph[i, j] == 1)
+                    {
+                        graph[j, i] = 1;
+                    }
+                }
+            }
             for (int i = 0; i < nNodes; i++)
             {
                 if (!nodes[i].visible)  // будем запускать поиск в ширину из каждой непосещённой вершины
@@ -41,7 +51,7 @@ namespace mousse.Algos
 
         private static void PaintGraph(int node, int color) // обход графа в глубину
         {
-            queueNodes.Enqueue(new KeyValuePair<int, string>(node, color == 1?"Aqua":"Blue"));
+            queueNodes.Enqueue(new KeyValuePair<int, string>(node, color == 1 ? "Aqua" : "Blue"));
             nodes[node].visible = true;
             nodes[node].v = color;
             for (int i = 0; i < nNodes; i++)
